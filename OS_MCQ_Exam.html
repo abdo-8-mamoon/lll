@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operating Systems – MCQ Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f1117;
+    --paper: #faf8f3;
+    --cream: #f2ede2;
+    --rule: #c8b99a;
+    --accent: #1c3d5a;
+    --accent2: #b5451b;
+    --correct: #1a5c3a;
+    --correct-bg: #e8f5ee;
+    --wrong: #7a1515;
+    --wrong-bg: #fdeaea;
+    --selected: #1c3d5a;
+    --selected-bg: #e8eef5;
+    --shadow: rgba(15,17,23,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Decorative top bar */
+  .top-bar {
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, var(--accent) 100%);
+  }
+
+  /* Header */
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .header-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  .course-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 10px;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+  }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+  .meta-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .meta-item { font-size: 12.5px; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 6px; }
+  .meta-item strong { color: #fff; font-weight: 600; }
+  .meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent2); flex-shrink: 0; }
+
+  /* Student info */
+  .student-section {
+    background: var(--cream);
+    border-bottom: 1px solid var(--rule);
+    padding: 24px 40px;
+  }
+  .student-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .field-group label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7a6e5f;
+    margin-bottom: 5px;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+  }
+  .field-group input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid var(--rule);
+    background: transparent;
+    padding: 6px 0;
+    font-size: 14px;
+    font-family: 'Source Serif 4', serif;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .field-group input:focus { border-color: var(--accent); }
+
+  /* Instructions */
+  .instructions {
+    max-width: 860px;
+    margin: 28px auto 0;
+    padding: 0 40px;
+  }
+  .instr-box {
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent2);
+    background: #fff;
+    padding: 14px 18px;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    color: #4a3f30;
+    line-height: 1.7;
+  }
+  .instr-box strong { color: var(--accent); }
+
+  /* Progress bar */
+  .progress-wrap {
+    max-width: 860px;
+    margin: 24px auto 0;
+    padding: 0 40px;
+  }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: #7a6e5f; margin-bottom: 7px; }
+  .progress-track {
+    height: 5px;
+    background: var(--cream);
+    border-radius: 99px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* Main content */
+  main { max-width: 860px; margin: 32px auto 60px; padding: 0 40px; }
+
+  /* Section heading */
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 36px 0 20px;
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+    flex: 1;
+    padding-bottom: 8px;
+  }
+
+  /* Question card */
+  .q-card {
+    background: #fff;
+    border: 1px solid #e0d9cc;
+    border-radius: 6px;
+    padding: 22px 24px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: border-color 0.2s;
+  }
+  .q-card:hover { border-color: #b5a894; }
+  .q-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .q-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    white-space: nowrap;
+    padding-top: 2px;
+    font-family: 'Source Serif 4', serif;
+  }
+  .q-text {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: #1a1512;
+    font-weight: 400;
+  }
+
+  /* Options */
+  .options { display: grid; gap: 7px; }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 13px;
+    border: 1.5px solid #e0d9cc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #2d261e;
+  }
+  .option:hover { background: var(--cream); border-color: #b5a894; }
+  .option.selected { background: var(--selected-bg); border-color: var(--selected); color: var(--selected); }
+  .option.correct  { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+  .option.wrong    { background: var(--wrong-bg);   border-color: var(--wrong);   color: var(--wrong);   }
+
+  .opt-letter {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    margin-top: 1px;
+  }
+  .option.selected .opt-letter { background: var(--selected); color: #fff; border-color: var(--selected); }
+  .option.correct  .opt-letter { background: var(--correct);  color: #fff; border-color: var(--correct);  }
+  .option.wrong    .opt-letter { background: var(--wrong);    color: #fff; border-color: var(--wrong);    }
+
+  /* Footer / Submit */
+  .submit-section {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .unanswered-msg { font-size: 13px; color: var(--accent2); display: none; }
+  .btn-submit {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 13px 36px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-submit:hover { background: #14293d; }
+  .btn-submit:active { transform: scale(0.98); }
+  .btn-submit:disabled { background: #9aa5ae; cursor: not-allowed; }
+
+  /* Score panel */
+  .score-panel {
+    display: none;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 6px;
+    padding: 32px 36px;
+    margin-top: 32px;
+    text-align: center;
+    animation: fadeUp 0.5s ease;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px);} to { opacity:1; transform:none;} }
+  .score-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+  .score-big { font-size: 56px; font-family: 'Playfair Display', serif; font-weight: 700; margin: 8px 0; line-height: 1; }
+  .score-sub { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .score-grade { font-size: 18px; margin-top: 10px; font-weight: 600; letter-spacing: 1px; color: #f5d79e; }
+  .btn-retry {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 10px 28px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 13px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-retry:hover { background: rgba(255,255,255,0.25); }
+
+  @media (max-width: 620px) {
+    header, .student-section, .instructions, .progress-wrap, main { padding-left: 18px; padding-right: 18px; }
+    .student-inner { grid-template-columns: 1fr; }
+    .meta-row { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="course-label">Computer Science Department &nbsp;·&nbsp; CS301</div>
+    <h1>Operating Systems<br>Multiple Choice Examination</h1>
+    <div class="meta-row">
+      <div class="meta-item"><div class="meta-dot"></div><strong id="q-count">—</strong>&nbsp;Questions</div>
+      <div class="meta-item"><div class="meta-dot"></div><strong>4</strong>&nbsp;Sections</div>
+      <div class="meta-item"><div class="meta-dot"></div>Duration: <strong>90 min</strong></div>
+      <div class="meta-item"><div class="meta-dot"></div>1 mark per question</div>
+    </div>
+  </div>
+</header>
+
+<div class="student-section">
+  <div class="student-inner">
+    <div class="field-group">
+      <label>Student Name</label>
+      <input type="text" placeholder="Full name…" />
+    </div>
+    <div class="field-group">
+      <label>Student ID</label>
+      <input type="text" placeholder="e.g. 20241234" />
+    </div>
+    <div class="field-group">
+      <label>Date</label>
+      <input type="text" id="exam-date" readonly />
+    </div>
+  </div>
+</div>
+
+<div class="instructions">
+  <div class="instr-box">
+    <strong>Instructions:</strong> Select <strong>one</strong> answer per question. Click <em>Submit Exam</em> when finished to see your score and review correct answers highlighted in green. Incorrect selections appear in red.
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span>Progress</span>
+    <span id="prog-text">0 / 0 answered</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<main id="main-content"></main>
+
+<script>
+const sections = [
+  {
+    title: "History of Operating Systems",
+    questions: [
+      { q: "Q1. Before operating systems existed, who was responsible for switching between punched cards on a machine?", opts: ["A software program","A person called an operator","The machine itself","A compiler"], ans: 1 },
+      { q: "Q2. Which of the following was NOT listed as a motivation for the development of operating systems?", opts: ["Batch of Programs","Time Sharing","Sharing Software","Graphical User Interface"], ans: 3 },
+      { q: "Q3. What problem did 'Sharing Software' aim to solve before operating systems?", opts: ["Programs could not run fast enough","Programs written for one machine could not run on a different machine","Programs could not be stored on disk","Programs could not access the internet"], ans: 1 },
+      { q: "Q4. What does the technique 'Time-Sharing' allow?", opts: ["A single program to run faster","Multiple programs to appear to run simultaneously on the same machine","Programs to be shared over a network","The OS to boot faster"], ans: 1 },
+      { q: "Q5. What is the full name of 'Multics'?", opts: ["Multiple Unix Computing System","Multiplexed Information and Computing Service","Multi-user Linked Computing System","Multilevel Time-sharing Computing Service"], ans: 1 },
+      { q: "Q6. Which three organizations collaborated to create Multics?", opts: ["IBM, Microsoft, and Apple","MIT, General Electric, and Bell Labs","Stanford, Intel, and AT&T","UCB, DEC, and NASA"], ans: 1 },
+      { q: "Q7. During which years was Multics developed?", opts: ["1954 – 1959","1960 – 1963","1964 – 1969","1970 – 1975"], ans: 2 },
+      { q: "Q8. Which of the following features was introduced by Multics?", opts: ["Graphical User Interface","Ring Protection","Virtual Machines","Touch Screen Input"], ans: 1 },
+      { q: "Q9. Who was the leader of the team that designed and developed Multics?", opts: ["Linus Torvalds","Dennis Ritchie","Fernando Jose Corbato","Ken Thompson"], ans: 2 },
+      { q: "Q10. What agency funded the Multics project?", opts: ["NASA","NSF","DARPA","IEEE"], ans: 2 },
+      { q: "Q12. What does 'UNICS' stand for?", opts: ["Universal Information Computing System","Uniplexed Operating and Computer System","Unified Network Interface Computing Service","Unix Integrated Computing System"], ans: 1 },
+      { q: "Q13. On which minicomputer was UNICS first tested?", opts: ["IBM 360","PDP-7","VAX 11","ENIAC"], ans: 1 },
+      { q: "Q14. Who suggested changing the name from UNICS to UNIX?", opts: ["Ken Thompson","Dennis Ritchie","Brian Kernighan","Bill Joy"], ans: 2 },
+      { q: "Q15. What was the main portability problem with the original UNIX?", opts: ["It was written in C, which was not widely supported","It was written in assembly language, making it machine-dependent","It lacked a file system","It could only run on Intel processors"], ans: 1 },
+      { q: "Q17. What does 'BSD' stand for?", opts: ["Bell Software Distribution","Berkeley Software Distribution","Basic System Design","Binary Software Deployment"], ans: 1 },
+      { q: "Q18. Who developed the vi text editor and the C shell, included in 2BSD?", opts: ["Ken Thompson","Dennis Ritchie","Ozlap Babaoglu","Bill Joy"], ans: 3 },
+      { q: "Q19. Who implemented virtual memory in BSD and released the 3BSD version?", opts: ["Bill Joy","Ken Thompson","Ozlap Babaoglu","Brian Kernighan"], ans: 2 },
+      { q: "Q20. Who is credited as the creator of the CP/M operating system?", opts: ["Bill Gates","Tim Paterson","Gary Kildall","Bill Joy"], ans: 2 },
+      { q: "Q21. What does CP/M stand for?", opts: ["Central Processing Monitor","Control Program/Monitor","Computer Personal Machine","Command Program Module"], ans: 1 },
+      { q: "Q22. What was 86-DOS designed to simulate?", opts: ["The UNIX API","The Multics API","The CP/M API","The BSD API"], ans: 2 },
+      { q: "Q23. Which company created 86-DOS?", opts: ["Microsoft","IBM","Seattle Computer Products (SCP)","Digital Research Inc."], ans: 2 },
+      { q: "Q25. Under what name was MS-DOS sold when bundled with the IBM PC at launch?", opts: ["MS-DOS 1.0","PC-DOS 1.0","86-DOS 1.0","IBM-DOS 1.0"], ans: 1 },
+      { q: "Q26. What microprocessor did IBM choose for its first personal computer?", opts: ["Intel 4004","Intel 8086","Intel 8088","Motorola 68000"], ans: 2 },
+      { q: "Q28. What programming language did Ken Thompson invent, which was the direct predecessor to C?", opts: ["Assembly","FORTRAN","B","COBOL"], ans: 2 },
+      { q: "Q29. Since what year has Ken Thompson worked at Google, where he co-developed the Go programming language?", opts: ["2000","2003","2006","2010"], ans: 2 },
+      { q: "Q30. What was the main reason Bell Labs withdrew from the Multics project?", opts: ["The project ran out of funding","Bell Labs realized the work would not benefit them in communications, their main field","The hardware was too expensive","MIT took full control of the project"], ans: 1 },
+    ]
+  },
+  {
+    title: "Operating System Concepts",
+    questions: [
+      { q: "Q1. Which of the following best defines an Operating System?", opts: ["Hardware that manages software","Software that manages computer hardware and acts as an intermediary between users and hardware","An application program used for browsing the internet","A device controller that handles I/O devices"], ans: 1 },
+      { q: "Q2. Which of the following is NOT listed as an operating system goal?", opts: ["Execute user programs and make solving user problems easier","Make the computer system convenient to use","Use the computer hardware in an efficient manner","Provide internet connectivity to users"], ans: 3 },
+      { q: "Q4. How many main components is a computer system divided into?", opts: ["Two","Three","Four","Five"], ans: 2 },
+      { q: "Q5. Which component of the computer system provides basic computing resources?", opts: ["Operating System","Application Programs","Hardware (CPU, memory, I/O devices)","Users"], ans: 2 },
+      { q: "Q6. What is the role of Application Programs in a computer system?", opts: ["To manage hardware resources","To define the ways system resources are used to solve users computing problems","To initialize hardware during startup","To synchronize memory access"], ans: 1 },
+      { q: "Q7. The OS is described as 'the driver of the computer hardware'. What does this mean?", opts: ["The OS physically moves hardware components","The OS controls and coordinates the use of hardware among applications and users","The OS installs hardware devices automatically","The OS replaces the need for hardware"], ans: 1 },
+      { q: "Q8. How is the OS viewed when it manages CPU time, memory space, storage, and I/O devices?", opts: ["As a compiler","As a resource allocator","As a device driver","As an application program"], ans: 1 },
+      { q: "Q9. What is the role of the OS as a 'control program'?", opts: ["It controls the price of hardware components","It manages user accounts and passwords","It manages the execution of user programs to prevent errors and improper use of the computer","It controls internet traffic"], ans: 2 },
+      { q: "Q10. What does the OS do when it faces conflicting requests for resources?", opts: ["It shuts down the computer","It gives priority to the most recently started program","It decides how to allocate resources so the system operates efficiently and fairly","It rejects all requests and waits"], ans: 2 },
+      { q: "Q11. What is the correct formula for an Operating System?", opts: ["OS = Hardware + Software","OS = Kernel + System Programs","OS = Application Programs + Device Drivers","OS = BIOS + Kernel"], ans: 1 },
+      { q: "Q12. Which of the following best describes the Kernel?", opts: ["A program that runs only when the user requests it","The one program running at all times on the computer with complete control over everything","A system program that ships with the OS but is not part of it","An application program used for system management"], ans: 1 },
+      { q: "Q13. What is true about System Programs?", opts: ["They are always part of the kernel","They are associated with the OS but not necessarily part of the kernel","They are application programs unrelated to the OS","They are stored in ROM"], ans: 1 },
+      { q: "Q14. The kernel is 'always resident in memory'. What does this mean?", opts: ["The kernel is stored on the hard disk permanently","The kernel is always loaded and available in RAM while the computer is running","The kernel cannot be updated","The kernel uses all available memory"], ans: 1 },
+      { q: "Q15. What is the first program to run when a computer is powered on?", opts: ["The kernel","A device driver","The bootstrap program","An application program"], ans: 2 },
+      { q: "Q16. What does the bootstrap program do after it starts?", opts: ["It installs application programs","It loads the kernel of the operating system into memory and starts its execution","It formats the hard disk","It connects to the internet"], ans: 1 },
+      { q: "Q17. What type of software is firmware?", opts: ["Software stored on hard drives for general use","Specialized software permanently or semi-permanently stored in hardware to provide low-level control","Application software used for firmware updates","A type of antivirus software"], ans: 1 },
+      { q: "Q18. Why can the bootstrap program NOT be stored in RAM?", opts: ["RAM is too slow to run programs","RAM is volatile and loses its content when power is turned off","RAM does not have enough capacity","RAM is reserved for the kernel only"], ans: 1 },
+      { q: "Q19. What does EEPROM stand for?", opts: ["Electronically Erasable Permanent Read-Only Memory","Electrically Erasable Programmable Read-Only Memory","Extended Erasable Programmable ROM","Embedded Erasable Programmable Read-Only Memory"], ans: 1 },
+      { q: "Q20. What is BIOS an example of?", opts: ["An application program","A device driver","Firmware stored in a computer's motherboard","A system call"], ans: 2 },
+      { q: "Q21. Which of the following is a task performed by the bootstrap program?", opts: ["Running user applications","Initializing all aspects of the system such as CPU and memory","Managing file permissions","Providing network connectivity"], ans: 1 },
+      { q: "Q22. Which equation is correct about the bootstrap program?", opts: ["Bootstrap = Kernel + BIOS","Bootstrap = Firmware + RAM","Bootstrap Program = BIOS = Firmware","Bootstrap = ROM + EEPROM"], ans: 2 },
+      { q: "Q23. What do modern general-purpose computer systems consist of?", opts: ["One CPU and one I/O device","One or more CPUs and a number of device controllers connected through a common bus","Multiple operating systems running on separate hardware","A single processor and a network card"], ans: 1 },
+      { q: "Q24. What is the role of the system bus?", opts: ["To store the operating system","To provide access between components (CPU, device controllers) and shared memory","To manage interrupt service routines","To execute application programs"], ans: 1 },
+      { q: "Q25. What is a device controller responsible for?", opts: ["Running application programs","Managing a specific type of device and moving data between peripheral devices and its local buffer storage","Booting the operating system","Allocating memory to processes"], ans: 1 },
+      { q: "Q26. What does a device driver do?", opts: ["Physically moves data on the hard disk","Understands the device controller and provides the OS with a uniform interface to the device","Allocates CPU time to programs","Manages the interrupt vector table"], ans: 1 },
+      { q: "Q27. Why is a memory controller needed in a computer system?", opts: ["To increase the speed of the CPU","To synchronize access to shared memory when the CPU and device controllers execute in parallel","To store the bootstrap program","To manage user accounts"], ans: 1 },
+      { q: "Q28. Which statement is TRUE about device controllers?", opts: ["Every device has its own controller","Not every device has a controller, but every device type has a controller","Device controllers are part of the kernel","A device controller can only control one device at a time"], ans: 1 },
+      { q: "Q29. What is an interrupt?", opts: ["A hardware failure that stops the computer","A signal generated when some event occurs that requires the OS to take action","A type of fast-access memory","A system program that manages file access"], ans: 1 },
+      { q: "Q30. What is a hardware interrupt?", opts: ["An interrupt generated by an internal system of the computer","An interrupt generated from an external device or hardware peripheral","An interrupt caused by a software error","An interrupt caused by the kernel"], ans: 1 },
+      { q: "Q32. What is an Interrupt Service Routine (ISR)?", opts: ["A hardware component that detects interrupts","A separate segment of code that determines what action should be taken for each type of interrupt","A memory region where the OS is stored","A type of device driver for I/O devices"], ans: 1 },
+      { q: "Q33. What is the Interrupt Vector?", opts: ["A two-dimensional array storing device drivers","A one-dimensional array storing addresses of interrupt service routines, indexed by interrupt number, stored in low memory","A register inside the CPU holding the current interrupt","A list of hardware devices connected to the system bus"], ans: 1 },
+      { q: "Q34. What are the three stages of a typical instruction execution cycle in a von Neumann architecture?", opts: ["Load, Execute, Store","Fetch, Decode, Execute","Read, Process, Write","Initialize, Run, Terminate"], ans: 1 },
+      { q: "Q35. What happens during the 'Fetch' stage of the instruction execution cycle?", opts: ["The instruction is decoded and operands are retrieved","The result of the instruction is stored back in memory","An instruction is fetched from memory and stored in the CPU instruction register","The CPU checks for pending interrupts"], ans: 2 },
+    ]
+  },
+  {
+    title: "Memory & Storage Systems",
+    questions: [
+      { q: "Q1. From where can the CPU load instructions to execute a program?", opts: ["Secondary storage (hard disk)","Memory (RAM)","Cache memory only","ROM"], ans: 1 },
+      { q: "Q2. What is the common name for rewritable memory from which general-purpose computers run most of their programs?", opts: ["ROM","Cache","Main memory (RAM)","EEPROM"], ans: 2 },
+      { q: "Q3. What semiconductor technology is commonly used to implement main memory?", opts: ["SRAM (Static RAM)","DRAM (Dynamic RAM)","EEPROM","Flash memory"], ans: 1 },
+      { q: "Q4. Why can't RAM be used to hold the bootstrap program?", opts: ["RAM is too slow to run the bootstrap program","RAM is volatile and loses its content when power is turned off","RAM does not have enough storage capacity","RAM is write-protected by the hardware"], ans: 1 },
+      { q: "Q5. What is EEPROM and what is it used for in the context of storage?", opts: ["A fast, volatile memory used for main memory","A nonvolatile, infrequently written storage that holds mostly static programs and data","A secondary storage device like a hard disk","A type of cache memory used between RAM and CPU"], ans: 1 },
+      { q: "Q6. What does the CPU's 'load' instruction do?", opts: ["Moves the content of a register to main memory","Moves a byte or word from main memory to an internal register within the CPU","Loads the OS from secondary storage","Transfers data from cache to the CPU"], ans: 1 },
+      { q: "Q7. What does the CPU's 'store' instruction do?", opts: ["Moves a byte from main memory to a CPU register","Moves the content of a register to main memory","Stores a program permanently on the hard disk","Copies cache contents to RAM"], ans: 1 },
+      { q: "Q8. All forms of memory provide an array of bytes. What is unique about each byte?", opts: ["Each byte stores exactly one character","Each byte has its own unique address","Each byte can only store binary zeros","Each byte is accessible only by the kernel"], ans: 1 },
+      { q: "Q9. Which of the following is NOT a reason why programs and data cannot reside permanently in main memory?", opts: ["Main memory is usually too small to store all programs and data permanently","Main memory is volatile and loses contents when power is lost","Main memory is too slow to hold programs permanently","Both A and B are correct reasons"], ans: 2 },
+      { q: "Q10. What is the main requirement for secondary storage?", opts: ["It must be faster than RAM","It must be able to hold large quantities of data permanently","It must be located inside the CPU","It must be volatile"], ans: 1 },
+      { q: "Q11. Which of the following are listed as the most common secondary-storage devices?", opts: ["Cache memory and registers","Hard-disk drives (HDDs) and nonvolatile memory (NVM) devices such as Flash Memory","ROM and EEPROM","Magnetic tapes and CD-ROM"], ans: 1 },
+      { q: "Q12. When are most programs (system and application) loaded into memory?", opts: ["They are always kept in memory permanently","They are loaded into memory from secondary storage when needed to run","They are loaded during the manufacturing of the computer","They are loaded from cache memory at startup"], ans: 1 },
+      { q: "Q13. How does secondary storage compare to main memory in terms of speed?", opts: ["Secondary storage is faster than main memory","Secondary storage is the same speed as main memory","Secondary storage is much slower than main memory","Speed depends on the type of CPU used"], ans: 2 },
+      { q: "Q14. What is tertiary storage?", opts: ["The fastest type of storage used between the CPU and RAM","Storage that is slow and large, used only for special purposes such as backup copies","Another name for main memory","A type of cache memory"], ans: 1 },
+      { q: "Q15. Which of the following is listed as an example of tertiary storage?", opts: ["RAM","CPU registers","Magnetic tapes","Cache memory"], ans: 2 },
+      { q: "Q16. What are the four main differences among various storage systems?", opts: ["Size, color, manufacturer, and age","Speed (access time), storage capacity, volatility, and cost","Voltage, bus width, bit depth, and latency","Price, brand, interface type, and warranty"], ans: 1 },
+      { q: "Q17. What general trade-off exists between size and speed in storage systems?", opts: ["Larger storage is always faster","Smaller and faster memory is closer to the CPU; larger memory is slower","Speed and size are independent of each other","Cost is the only factor that determines speed"], ans: 1 },
+      { q: "Q19. What does NVS stand for and when is the term used?", opts: ["Non-Volatile System; used for all storage types","Nonvolatile Storage; used to refer to storage that retains its contents when power is lost","New Virtual Storage; used for cloud storage","Network Volume Storage; used for remote storage"], ans: 1 },
+      { q: "Q20. Which of the following is classified as 'mechanical' nonvolatile storage?", opts: ["Flash memory","SSD","FRAM","Hard-disk drives (HDDs) and magnetic tape"], ans: 3 },
+      { q: "Q21. Which of the following is classified as 'electrical' nonvolatile storage (NVM)?", opts: ["Hard-disk drives (HDDs)","Magnetic tape","Flash memory and SSD","Holographic storage"], ans: 2 },
+      { q: "Q22. How does mechanical storage compare to electrical storage in terms of cost and size?", opts: ["Mechanical is more expensive and smaller than electrical","Mechanical is generally larger and less expensive per byte than electrical storage","Mechanical and electrical storage have the same cost per byte","Electrical is larger and cheaper than mechanical"], ans: 1 },
+      { q: "Q23. What is cache memory?", opts: ["A large, slow memory used for permanent storage","An extremely fast memory that acts as a buffer between RAM and the CPU, holding frequently requested data","A type of secondary storage used for backup","The portion of RAM reserved for the operating system kernel"], ans: 1 },
+      { q: "Q24. What is the primary purpose of cache memory?", opts: ["To increase the permanent storage capacity of the computer","To reduce the average time to access data from main memory","To replace secondary storage","To store the bootstrap program"], ans: 1 },
+      { q: "Q25. What does 'caching' refer to?", opts: ["Compressing data to save storage space","Using high-speed memory to hold a copy of recently accessed data assuming it will be needed again soon","Writing data directly from the CPU to the hard disk","Encrypting memory contents for security"], ans: 1 },
+      { q: "Q26. What is 'cache coherency'?", opts: ["Ensuring the cache is always larger than RAM","Ensuring that an update to data in one cache is immediately reflected in all other caches containing a copy of that data","Ensuring cache memory is never overwritten","A technique to compress cache data for efficiency"], ans: 1 },
+      { q: "Q27. In a general-purpose computer system, what are connected through a common bus?", opts: ["Only the CPU and main memory","The CPU and multiple device controllers","The CPU and the bootstrap program","Device drivers and application programs"], ans: 1 },
+      { q: "Q28. What does each device controller contain?", opts: ["A CPU core and a hard disk","A local buffer storage and a set of registers","A copy of the operating system kernel","An internet interface and a file system"], ans: 1 },
+      { q: "Q29. Who provides a device driver for each device controller?", opts: ["The hardware manufacturer only","The operating system","The user","The application program"], ans: 1 },
+      { q: "Q30. What is the first step the device driver performs during an I/O operation?", opts: ["Generates an interrupt to the OS","Loads the registers within the device controller with the required instructions","Transfers data directly to main memory","Returns status information to the user"], ans: 1 },
+      { q: "Q31. After the device controller finishes transferring data, what does it do to inform the device driver?", opts: ["It writes a status byte to main memory","It generates an interrupt","It sends a network packet","It updates the interrupt vector directly"], ans: 1 },
+      { q: "Q32. What does the device driver return to the OS after a READ I/O operation?", opts: ["A list of available devices","The data that was read","The device controller's register values","An updated interrupt vector"], ans: 1 },
+      { q: "Q33. What is the drawback of the standard I/O operation when used for bulk data movement?", opts: ["It requires special hardware not available on most computers","It can produce high overhead on the CPU because the CPU is involved for every byte transferred","It only works with magnetic tape devices","It requires the device to be directly connected to the CPU"], ans: 1 },
+      { q: "Q34. What is Direct Memory Access (DMA)?", opts: ["A technique where the CPU directly reads from secondary storage without using RAM","A capability that allows a device controller to transfer an entire block of data directly between its local buffer and main memory without CPU intervention","A method of compressing data before storing it in RAM","A type of cache replacement policy"], ans: 1 },
+      { q: "Q35. How many interrupts does a device controller generate per block of data when using DMA?", opts: ["One interrupt per byte transferred","One interrupt per block transferred","No interrupts at all","Two interrupts per block (start and end)"], ans: 1 },
+      { q: "Q36. What is the CPU doing while the device controller transfers a whole data block using DMA?", opts: ["The CPU is idle and waiting for the transfer to complete","The CPU is available to accomplish other work","The CPU is managing the data transfer byte by byte","The CPU is blocked and cannot execute any instructions"], ans: 1 },
+      { q: "Q37. Which of the following best describes the advantage of DMA over standard I/O?", opts: ["DMA is simpler to implement than standard I/O","DMA reduces CPU overhead for bulk data transfer by allowing the device to move data directly to/from memory","DMA eliminates the need for device drivers","DMA allows the CPU to access secondary storage directly"], ans: 1 },
+      { q: "Q39. What are the two names for the bootstrap loader?", opts: ["GRUB and LILO","BIOS (Basic Input/Output System) and UEFI (Unified Extensible Firmware Interface)","ROM and EEPROM","Kernel and device driver"], ans: 1 },
+      { q: "Q40. What does the bootstrap loader do when the computer powers on?", opts: ["It formats the hard disk and installs the OS","It locates the OS boot loader, loads it into memory, and transfers control to it so the OS can start","It runs all application programs in sequence","It checks internet connectivity before loading the OS"], ans: 1 },
+    ]
+  },
+  {
+    title: "Dual-Mode Operation & Protection",
+    questions: [
+      { q: "Q1. Why must an operating system distinguish between the execution of OS code and user-defined code?", opts: ["To improve the graphical performance of user applications","To ensure an incorrect or malicious program cannot cause other programs to execute incorrectly","To allow user programs to access hardware directly","To speed up the boot process"], ans: 1 },
+      { q: "Q2. What is the minimum number of modes of operation required in a dual-mode system?", opts: ["One","Two","Four","Seven"], ans: 1 },
+      { q: "Q3. What is the other name for Kernel mode?", opts: ["Application mode","Safe mode","Supervisor mode, system mode, or privileged mode","Protected mode only"], ans: 2 },
+      { q: "Q4. Where is the mode bit stored?", opts: ["In main memory (RAM)","In the processor status register","In the hard disk's boot sector","In the interrupt vector table"], ans: 1 },
+      { q: "Q5. What does a mode bit value of 0 indicate?", opts: ["User mode","Sleep mode","Kernel mode","Virtual machine mode"], ans: 2 },
+      { q: "Q6. What does a mode bit value of 1 indicate?", opts: ["Kernel mode","User mode","Privileged mode","Supervisor mode"], ans: 1 },
+      { q: "Q7. In what mode must user-defined application programs execute?", opts: ["Kernel mode","Supervisor mode","User mode","Any mode depending on the application"], ans: 2 },
+      { q: "Q8. What happens when a user application requests a service from the OS via a system call?", opts: ["The application is given kernel mode temporarily to handle the request itself","The system transitions from user mode to kernel mode to fulfill the request","The request is ignored until the OS is idle","The mode bit is set to 1 to indicate a request"], ans: 1 },
+      { q: "Q9. At system boot time, in which mode does the hardware start?", opts: ["User mode","Sleep mode","Kernel mode","Safe mode"], ans: 2 },
+      { q: "Q10. What happens to the mode bit when a trap or interrupt occurs?", opts: ["It is set to 1 (user mode)","It is reset to 0 (kernel mode)","It remains unchanged","It is stored in RAM for recovery"], ans: 1 },
+      { q: "Q11. What happens when a user program attempts to execute a privileged instruction in user mode?", opts: ["The CPU executes it with a warning","The OS silently ignores the instruction","The hardware treats it as illegal and traps it to the operating system","The system reboots automatically"], ans: 2 },
+      { q: "Q12. Which of the following is listed as an example of a privileged instruction?", opts: ["Reading a text file from disk","Displaying text on screen","Directly accessing I/O devices","Running a web browser"], ans: 2 },
+      { q: "Q13. Which of the following is also listed as a privileged instruction?", opts: ["Opening a text editor","Changing the mode bit in the processor status register","Sending an email","Compiling a program"], ans: 1 },
+      { q: "Q14. What is the purpose of dual-mode operation?", opts: ["To speed up CPU processing","To provide protection of the OS from errant users and programs","To allow user programs to access hardware directly","To enable multi-core processing"], ans: 1 },
+      { q: "Q15. How is the mode bit check enforced — is it software or hardware?", opts: ["It is a software policy that can be overridden by privileged applications","It is a physical gate inside the CPU chip that cannot be bypassed from user mode","It is enforced by the OS kernel in software","It depends on the operating system implementation"], ans: 1 },
+      { q: "Q16. What is the only way to switch the mode bit from 1 (user mode) to 0 (kernel mode)?", opts: ["By writing directly to the processor status register from user code","Through a system call or hardware interrupt that automatically transfers control to the OS","By restarting the computer","By running an application with administrator privileges"], ans: 1 },
+      { q: "Q17. How many separate protection rings do Intel processors have?", opts: ["Two","Three","Four","Seven"], ans: 2 },
+      { q: "Q18. How many modes do ARMv8 systems support?", opts: ["Two","Four","Six","Seven"], ans: 3 },
+      { q: "Q19. In systems that support virtualization, what special mode is provided?", opts: ["A mode with more privileges than the kernel","A Virtual Machine Manager (VMM) mode with more privileges than user processes but fewer than the kernel","A mode that completely bypasses hardware protection","A mode identical to kernel mode"], ans: 1 },
+      { q: "Q20. Which of the following correctly describes the instruction execution life cycle in a computer system?", opts: ["User mode → Kernel mode → User mode → terminates","Kernel mode (OS) → User mode (application) → back to Kernel mode via interrupt/trap/system call","Kernel mode only for all instructions","User mode for all instructions, kernel mode only at boot"], ans: 1 },
+      { q: "Q21. What dangerous scenario does dual-mode leave unaddressed that requires the use of a timer?", opts: ["A user program accessing the wrong file","A user program running forever in an infinite loop and never returning control to the OS","A kernel program crashing the system","Two programs accessing the same memory location"], ans: 1 },
+      { q: "Q22. What is the purpose of a timer in an operating system?", opts: ["To display the current time to the user","To interrupt the computer after a specified period to prevent a user program from monopolizing the CPU","To synchronize clocks across networked computers","To measure the execution time of kernel instructions"], ans: 1 },
+      { q: "Q23. How is a variable timer generally implemented?", opts: ["Using a real-time clock chip that runs independently","By a fixed-rate clock and a counter decremented by the OS","Using software interrupts only","By the application program setting a timeout value"], ans: 1 },
+      { q: "Q24. What happens when the timer counter reaches zero?", opts: ["The system shuts down immediately","An interrupt is generated, causing the OS to regain control","The user program is paused but not interrupted","The mode bit is set to 1"], ans: 1 },
+      { q: "Q25. Are instructions that modify the content of the timer privileged or not?", opts: ["No, any program can modify the timer","Yes, instructions that modify the timer are privileged and can only be executed in kernel mode","Only the user program can set the timer","Timer modification requires no special privileges"], ans: 1 },
+      { q: "Q26. What two hardware mechanisms together form a complete hardware-enforced protection strategy?", opts: ["Cache memory and DMA","Dual mode and the timer","Interrupts and device drivers","EEPROM and ROM"], ans: 1 },
+      { q: "Q27. What types of computing systems did OS-based computer systems evolve through historically?", opts: ["Cloud → Mobile → Desktop → Mainframe","Mainframe (batch) → Multiprogramming → Time-sharing → Desktop","Desktop → Mainframe → Cloud","Real-time → Distributed → Personal"], ans: 1 },
+      { q: "Q28. In early batch systems, how was data transferred to the computer from card readers?", opts: ["Data was transferred directly over a network","Cards were first copied onto a magnetic tape, which was then carried to the computer","Cards were read directly by the CPU in real time","Data was typed manually by an operator into the computer"], ans: 1 },
+      { q: "Q29. What was the key insight behind using magnetic tape as an intermediate medium in batch systems?", opts: ["Magnetic tape was cheaper than other storage media","It separated fast electronic processing from slow mechanical I/O, allowing the CPU to run at full speed","It allowed multiple CPUs to share data simultaneously","It enabled the OS to be permanently stored"], ans: 1 },
+      { q: "Q30. In a batch system, how many programs are loaded in memory at a time?", opts: ["As many as fit in memory","Only one program is loaded in memory at a time","Two programs — one for I/O and one for processing","It depends on the CPU speed"], ans: 1 },
+    ]
+  }
+];
+
+const LETTERS = ['A','B','C','D'];
+let selections = {}; // key: "s-q" => option index
+let submitted = false;
+
+function totalQ() { return sections.reduce((a,s)=>a+s.questions.length,0); }
+function answeredCount() { return Object.keys(selections).length; }
+
+function updateProgress() {
+  const total = totalQ();
+  const answered = answeredCount();
+  document.getElementById('prog-text').textContent = `${answered} / ${total} answered`;
+  document.getElementById('prog-fill').style.width = (answered/total*100)+'%';
+}
+
+function render() {
+  const total = totalQ();
+  document.getElementById('q-count').textContent = total;
+
+  const main = document.getElementById('main-content');
+  main.innerHTML = '';
+
+  sections.forEach((sec, si) => {
+    const sh = document.createElement('div');
+    sh.className = 'section-heading';
+    sh.innerHTML = `<div class="section-num">${si+1}</div><div class="section-title">${sec.title}</div>`;
+    main.appendChild(sh);
+
+    sec.questions.forEach((q, qi) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+      card.id = `card-${si}-${qi}`;
+
+      const header = `<div class="q-header"><div class="q-num">Q ${qi+1}</div><div class="q-text">${q.q}</div></div>`;
+      const optsHtml = q.opts.map((opt, oi) => `
+        <div class="option" id="opt-${si}-${qi}-${oi}" onclick="select(${si},${qi},${oi})">
+          <div class="opt-letter">${LETTERS[oi]}</div>
+          <span>${opt}</span>
+        </div>`).join('');
+
+      card.innerHTML = header + `<div class="options">${optsHtml}</div>`;
+      main.appendChild(card);
+    });
+  });
+
+  // Submit area
+  const sub = document.createElement('div');
+  sub.className = 'submit-section';
+  sub.innerHTML = `
+    <div class="unanswered-msg" id="unanswered-msg">⚠ Please answer all questions before submitting.</div>
+    <button class="btn-submit" id="btn-submit" onclick="submit()">Submit Exam</button>`;
+  main.appendChild(sub);
+
+  // Score panel
+  const sp = document.createElement('div');
+  sp.className = 'score-panel';
+  sp.id = 'score-panel';
+  main.appendChild(sp);
+
+  updateProgress();
+}
+
+function select(si, qi, oi) {
+  if (submitted) return;
+  const key = `${si}-${qi}`;
+  // Deselect previous
+  if (selections[key] !== undefined) {
+    document.getElementById(`opt-${si}-${qi}-${selections[key]}`).classList.remove('selected');
+  }
+  selections[key] = oi;
+  document.getElementById(`opt-${si}-${qi}-${oi}`).classList.add('selected');
+  updateProgress();
+}
+
+function submit() {
+  const total = totalQ();
+  if (answeredCount() < total) {
+    document.getElementById('unanswered-msg').style.display = 'block';
+    return;
+  }
+  submitted = true;
+  document.getElementById('unanswered-msg').style.display = 'none';
+  document.getElementById('btn-submit').disabled = true;
+
+  let correct = 0;
+  sections.forEach((sec, si) => {
+    sec.questions.forEach((q, qi) => {
+      const key = `${si}-${qi}`;
+      const chosen = selections[key];
+      const right = q.ans;
+      const chosenEl = document.getElementById(`opt-${si}-${qi}-${chosen}`);
+      const rightEl = document.getElementById(`opt-${si}-${qi}-${right}`);
+      if (chosen === right) {
+        correct++;
+        chosenEl.classList.remove('selected');
+        chosenEl.classList.add('correct');
+      } else {
+        chosenEl.classList.remove('selected');
+        chosenEl.classList.add('wrong');
+        rightEl.classList.add('correct');
+      }
+    });
+  });
+
+  const pct = Math.round(correct/total*100);
+  let grade = pct >= 90 ? 'A+' : pct >= 80 ? 'A' : pct >= 70 ? 'B' : pct >= 60 ? 'C' : pct >= 50 ? 'D' : 'F';
+  const panel = document.getElementById('score-panel');
+  panel.style.display = 'block';
+  panel.innerHTML = `
+    <h2>Exam Complete</h2>
+    <div class="score-big">${pct}%</div>
+    <div class="score-sub">${correct} correct out of ${total} questions</div>
+    <div class="score-grade">Grade: ${grade}</div>
+    <button class="btn-retry" onclick="retry()">Try Again</button>`;
+  panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function retry() {
+  selections = {};
+  submitted = false;
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Set date
+document.getElementById('exam-date').value = new Date().toLocaleDateString('en-GB', {day:'2-digit',month:'long',year:'numeric'});
+
+render();
+</script>
+</body>
+</html>
